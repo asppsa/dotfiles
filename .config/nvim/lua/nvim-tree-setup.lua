@@ -5,18 +5,7 @@ vim.g.loaded_netrwPlugin = 1
 -- empty setup using defaults
 local nvim_tree = require("nvim-tree")
 local nvim_tree_api = require("nvim-tree.api")
-nvim_tree.setup({
-  renderer = {
-    icons = {
-      show = {
-        file = false,
-        folder = false,
-        folder_arrow = true,
-        git = false
-      }
-    }
-  }
-})
+nvim_tree.setup()
 
 -- Add bindings to open the tree
 vim.keymap.set('n', '-', function()

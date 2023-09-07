@@ -126,5 +126,8 @@ setup 'ember'
 --   cmd = {'yarn', '-s', 'glint-language-server'}
 -- })
 setup 'eslint'
-setup 'syntax_tree'
+
+-- causing too much consternation
+-- setup 'syntax_tree'
+
 -- setup 'typeprof'

@@ -9,7 +9,7 @@ return require('packer').startup(function(use)
   -- use 'mfussenegger/nvim-lint'
   -- use 'mhartington/formatter.nvim'
   use {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
-  -- use 'editorconfig/editorconfig-vim'
+  use 'editorconfig/editorconfig-vim'
   -- use 'itchyny/lightline.vim'
   use 'kamykn/popup-menu.nvim'
   use 'kamykn/spelunker.vim'
@@ -45,7 +45,7 @@ return require('packer').startup(function(use)
   use {'tzachar/fuzzy.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
   use {
     "folke/trouble.nvim",
-    --requires = "kyazdani42/nvim-web-devicons",
+    requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup {
         -- your configuration comes here
@@ -56,14 +56,14 @@ return require('packer').startup(function(use)
   }
   use {
     'nvim-lualine/lualine.nvim',
-    -- requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use {
     'pwntester/octo.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
-      --'kyazdani42/nvim-web-devicons',
+      'kyazdani42/nvim-web-devicons',
     },
     config = function ()
       require"octo".setup()
@@ -75,6 +75,12 @@ return require('packer').startup(function(use)
     config = function()
       require("sad").setup{}
     end,
+  }
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
   }
 
   -- completion
