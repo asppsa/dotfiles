@@ -114,8 +114,20 @@ return require('packer').startup(function(use)
   --use 'bluz71/vim-nightfly-guicolors'
   use 'bluz71/vim-moonfly-colors'
   --use 'ChristianChiarulli/nvcode-color-schemes.vim'
-  use 'folke/tokyonight.nvim'
+  -- use 'folke/tokyonight.nvim'
   use 'sainnhe/sonokai'
   use 'tanvirtin/monokai.nvim'
   use 'sainnhe/everforest'
+  use({
+    'glepnir/zephyr-nvim',
+    requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
+  })
+  use({ 'rose-pine/neovim',
+    as = 'rose-pine',
+    config = function()
+      require("rose-pine").setup({
+        variant = 'moon'
+      })
+    end,
+  })
 end)

@@ -44,10 +44,10 @@ set termguicolors      " enable true colors support
 "let ayucolor="dark"   " for dark version of theme
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
-let g:everforest_background = 'hard'
+"let g:everforest_background = 'hard'
 "let g:sonokai_style = 'andromeda'
-let g:everforest_enable_italic = 1
-colorscheme everforest
+"g:everforest_enable_italic = 1
+colorscheme rose-pine
 "hi Normal guibg=NONE ctermbg=NONE
 "hi LineNr guibg=NONE ctermbg=NONE
 "hi SignColumn guibg=NONE ctermbg=NONE
