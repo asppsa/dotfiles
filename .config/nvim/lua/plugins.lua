@@ -17,12 +17,23 @@ return require('packer').startup(function(use)
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
   use 'neovim/nvim-lspconfig'
-  use 'sheerun/vim-polyglot'
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
-  use 'tyru/open-browser-github.vim'
-  use 'tyru/open-browser.vim'
-  use 'Quramy/vim-js-pretty-template'
+  -- use 'sheerun/vim-polyglot'
+  -- use 'tpope/vim-fugitive'
+  -- use 'tpope/vim-rhubarb'
+  use {
+    'TimUntersberger/neogit',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim'
+    }
+  }
+  use {
+      'ruifm/gitlinker.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+  }
+  -- use 'tyru/open-browser-github.vim'
+  -- use 'tyru/open-browser.vim'
+  -- use 'Quramy/vim-js-pretty-template'
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',

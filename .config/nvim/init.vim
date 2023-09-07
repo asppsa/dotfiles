@@ -9,9 +9,6 @@ set hidden
 " Enable mouse interaction
 set mouse=nv
 
-" Prevent vim-polyglot from installing these
-let g:polyglot_disabled = ['javascript', 'typescript', 'handlebars', 'html.handlebars', 'ruby']
-
 let g:vim_markdown_folding_disabled = 1
 
 " Load plugins using packer
@@ -30,6 +27,7 @@ lua require 'cmp-setup'
 lua require 'lsp-setup'
 lua require 'nvim-tree-setup'
 lua require 'lualine-setup'
+lua require 'git-setup'
 if exists("g:neovide")
   lua require "neovide-setup"
 endif
@@ -59,3 +57,8 @@ set noshowmode
 " deletes the last newline in the file
 map <M-S-x> :!perl -pi -e 'chomp if eof' %<CR>
 
+" tab commands
+nmap <leader>tn :tabnext<CR>
+nmap <leader>tp :tabprevious<CR>
+nmap <leader>to :tabnew<CR>
+nmap <leader>tc :tabclose<CR>
