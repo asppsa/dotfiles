@@ -37,6 +37,11 @@ export WORDCHARS=""
 bindkey '^[[1;3C' forward-word
 bindkey '^[[1;3D' backward-word
 
+# Load work config, if exists
+if [ -f "$HOME/.work.zsh" ]; then
+  source "$HOME/.work.zsh"
+fi
+
 # Prompt - use starship if installed
 if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
