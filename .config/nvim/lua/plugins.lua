@@ -21,7 +21,7 @@ return require('packer').startup(function(use)
   -- use 'tpope/vim-fugitive'
   -- use 'tpope/vim-rhubarb'
   use {
-    'TimUntersberger/neogit',
+    'NeogitOrg/neogit',
     requires = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
