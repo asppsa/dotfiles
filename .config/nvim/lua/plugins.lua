@@ -12,19 +12,25 @@ return require('packer').startup(function(use)
   use 'editorconfig/editorconfig-vim'
   -- use 'itchyny/lightline.vim'
   use 'kamykn/popup-menu.nvim'
-  use 'kamykn/spelunker.vim'
+  -- use 'kamykn/spelunker.vim'
   -- use 'maximbaz/lightline-ale'
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
   use 'neovim/nvim-lspconfig'
   -- use 'sheerun/vim-polyglot'
-  -- use 'tpope/vim-fugitive'
+  use 'tpope/vim-fugitive'
   -- use 'tpope/vim-rhubarb'
   use {
     'NeogitOrg/neogit',
     requires = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
+    }
+  }
+  use {
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
     }
   }
   use {
@@ -92,6 +98,12 @@ return require('packer').startup(function(use)
     config = function()
         require('Comment').setup()
     end
+  }
+  use {
+    'nvim-pack/nvim-spectre',
+    requires = {
+      'nvim-lua/plenary.nvim',
+    }
   }
 
   -- completion
