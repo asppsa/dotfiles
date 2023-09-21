@@ -54,6 +54,9 @@ colorscheme rose-pine
 " This gets rid of "-- INSERT --"
 set noshowmode
 
+# Enable spellchecking
+set spell
+
 " deletes the last newline in the file
 map <M-S-x> :!perl -pi -e 'chomp if eof' %<CR>
 
