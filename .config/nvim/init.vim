@@ -11,14 +11,8 @@ set mouse=nv
 
 let g:vim_markdown_folding_disabled = 1
 
-" Load plugins using packer
+" Load plugins using lazy
 lua require 'plugins'
-
-" Reload packer whenever the file is saved
-augroup packer_user_config
-  autocmd!
-  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-augroup end
 
 " Setup other lua stuff
 lua require 'treesitter-setup'
@@ -54,7 +48,7 @@ colorscheme rose-pine
 " This gets rid of "-- INSERT --"
 set noshowmode
 
-# Enable spellchecking
+" Enable spellchecking
 set spell
 
 " deletes the last newline in the file

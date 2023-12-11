@@ -1,56 +1,61 @@
-return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-  --use 'scrooloose/nerdtree'
-  use 'nvim-tree/nvim-tree.lua'
+return require('lazy').setup({
+  'nvim-tree/nvim-tree.lua',
 
-  use 'ap/vim-css-color'
-  -- use 'dense-analysis/ale'
-  -- use 'mfussenegger/nvim-lint'
-  -- use 'mhartington/formatter.nvim'
-  use {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
-  use 'editorconfig/editorconfig-vim'
-  -- use 'itchyny/lightline.vim'
-  use 'kamykn/popup-menu.nvim'
-  -- use 'kamykn/spelunker.vim'
-  -- use 'maximbaz/lightline-ale'
-  use "williamboman/mason.nvim"
-  use "williamboman/mason-lspconfig.nvim"
-  use 'neovim/nvim-lspconfig'
-  -- use 'sheerun/vim-polyglot'
-  use 'tpope/vim-fugitive'
-  -- use 'tpope/vim-rhubarb'
-  use {
+  'ap/vim-css-color',
+  {'jose-elias-alvarez/null-ls.nvim', dependencies = {'nvim-telescope/telescope-fzf-native.nvim'}},
+  'editorconfig/editorconfig-vim',
+  -- 'itchyny/lightline.vim'
+  'kamykn/popup-menu.nvim',
+  -- 'kamykn/spelunker.vim'
+  -- 'maximbaz/lightline-ale'
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  'neovim/nvim-lspconfig',
+  -- 'sheerun/vim-polyglot'
+  'tpope/vim-fugitive',
+  -- 'tpope/vim-rhubarb'
+  {
     'NeogitOrg/neogit',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
     }
-  }
-  use {
+  },
+  {
     'tanvirtin/vgit.nvim',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim'
     }
-  }
-  use {
+  },
+  {
       'ruifm/gitlinker.nvim',
-      requires = 'nvim-lua/plenary.nvim',
-  }
-  -- use 'tyru/open-browser-github.vim'
-  -- use 'tyru/open-browser.vim'
-  -- use 'Quramy/vim-js-pretty-template'
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  use {
+      dependencies = 'nvim-lua/plenary.nvim'
+  },
+  -- 'tyru/open-browser-github.vim'
+  -- 'tyru/open-browser.vim'
+  -- 'Quramy/vim-js-pretty-template'
+  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
-    requires = {'nvim-lua/plenary.nvim'}
-  }
-  use 'ThePrimeagen/vim-be-good'
-  -- use 'nvim-lua/lsp-status.nvim'
-  -- use 'ms-jpq/coq_nvim'
-  use {
+    dependencies = {'nvim-lua/plenary.nvim'}
+  },
+  'ThePrimeagen/vim-be-good',
+  {
     'nvim-telescope/telescope-fzf-native.nvim',
-    run = [[
+    build = [[
       cmake \
         -S. \
         -Bbuild \
@@ -58,26 +63,26 @@ return require('packer').startup(function(use)
       cmake --build build --config Release && \
       cmake --install build --prefix build
     ]]
-  }
-  use {'tzachar/fuzzy.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
-  use {
+  },
+  {'tzachar/fuzzy.nvim', dependencies = {'nvim-telescope/telescope-fzf-native.nvim'}},
+  {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
+    dependencies = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup {
         -- your configuration comes here
-        -- or leave it empty to use the default settings
+        -- or leave it empty to the default settings
         -- refer to the configuration section below
       }
     end
-  }
-  use {
+  },
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
-  use {
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
+  },
+  {
     'pwntester/octo.nvim',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
       'kyazdani42/nvim-web-devicons',
@@ -85,72 +90,93 @@ return require('packer').startup(function(use)
     config = function ()
       require"octo".setup()
     end
-  }
-  use {
+  },
+  {
     "ray-x/sad.nvim",
-    requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+    dependencies = { "ray-x/guihua.lua", build = "cd lua/fzy && make" },
     config = function()
       require("sad").setup{}
-    end,
-  }
-  use {
+    end
+  },
+  {
     'numToStr/Comment.nvim',
     config = function()
         require('Comment').setup()
     end
-  }
-  use {
+  },
+  {
     'nvim-pack/nvim-spectre',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
     }
-  }
+  },
+
+  {
+    "nvim-neorg/neorg",
+    config = function()
+        require('neorg').setup {
+            load = {
+                ["core.defaults"] = {}, -- Loads default behaviour
+                ["core.concealer"] = {}, -- Adds pretty icons to your documents
+                ["core.dirman"] = { -- Manages Neorg workspaces
+                    config = {
+                        workspaces = {
+                            notes = "~/notes",
+                        },
+                    },
+                },
+            },
+        }
+    end,
+    build = ":Neorg sync-parsers",
+    dependencies = "nvim-lua/plenary.nvim",
+  },
 
   -- completion
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
-  use {'tzachar/cmp-fuzzy-path', requires = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}}
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/nvim-cmp',
+  {'tzachar/cmp-fuzzy-path', dependencies = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}},
 
   -- Colour Schemes
-  --use 'arcticicestudio/nord-vim'
-  use 'artanikin/vim-synthwave84'
-  use 'ayu-theme/ayu-vim'
-  use 'cocopon/iceberg.vim'
-  use {'dracula/vim', as = 'dracula'}
-  use 'flrnprz/candid.vim'
-  use 'haishanh/night-owl.vim'
-  use 'jcherven/jummidark.vim'
-  use 'morhetz/gruvbox'
-  use 'sainnhe/edge'
-  use 'sainnhe/vim-color-forest-night'
-  use 'tomasr/molokai'
-  use 'tpope/vim-vividchalk'
-  use 'rubik/vim-base16-paraiso'
+  --'arcticicestudio/nord-vim'
+  'artanikin/vim-synthwave84',
+  'ayu-theme/ayu-vim',
+  'cocopon/iceberg.vim',
+  {'dracula/vim', name = 'dracula'},
+  'flrnprz/candid.vim',
+  'haishanh/night-owl.vim',
+  'jcherven/jummidark.vim',
+  'morhetz/gruvbox',
+  'sainnhe/edge',
+  'sainnhe/vim-color-forest-night',
+  'tomasr/molokai',
+  'tpope/vim-vividchalk',
+  'rubik/vim-base16-paraiso',
   -- nvim colour schemes
-  use 'mhartington/oceanic-next'
-  use 'Abstract-IDE/Abstract-cs'
-  use 'rafamadriz/neon'
-  --use 'marko-cerovac/material.nvim'
-  --use 'bluz71/vim-nightfly-guicolors'
-  use 'bluz71/vim-moonfly-colors'
-  --use 'ChristianChiarulli/nvcode-color-schemes.vim'
-  -- use 'folke/tokyonight.nvim'
-  use 'sainnhe/sonokai'
-  use 'tanvirtin/monokai.nvim'
-  use 'sainnhe/everforest'
-  use({
+  'mhartington/oceanic-next',
+  'Abstract-IDE/Abstract-cs',
+  'rafamadriz/neon',
+  --'marko-cerovac/material.nvim'
+  --'bluz71/vim-nightfly-guicolors'
+  'bluz71/vim-moonfly-colors',
+  --'ChristianChiarulli/nvcode-color-schemes.vim'
+  -- 'folke/tokyonight.nvim'
+  'sainnhe/sonokai',
+  'tanvirtin/monokai.nvim',
+  'sainnhe/everforest',
+  {
     'glepnir/zephyr-nvim',
-    requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
-  })
-  use({ 'rose-pine/neovim',
-    as = 'rose-pine',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  { 'rose-pine/neovim',
+    name = 'rose-pine',
     config = function()
       require("rose-pine").setup({
         variant = 'moon'
       })
-    end,
-  })
-end)
+    end
+  }
+})
