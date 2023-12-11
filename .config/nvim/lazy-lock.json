@@ -12,6 +12,7 @@
   "dracula": { "branch": "master", "commit": "6495b4ff40479ec7705addb4ea800ec308026648" },
   "edge": { "branch": "master", "commit": "d811acd067193fabadd04f081228fd97827ae5ae" },
   "editorconfig-vim": { "branch": "master", "commit": "95cb75e21d11206dad4bd3895c99459bdaa13dd1" },
+  "efmls-configs-nvim": { "branch": "main", "commit": "ff84e0402907f9557778bd6cb32f9d5b1552ffaf" },
   "everforest": { "branch": "master", "commit": "72f101bd63228a1a45012325e39c5280ec22c828" },
   "fuzzy.nvim": { "branch": "master", "commit": "67a42ad2fa6d5ff41f0ef3cf69bb247410da5d7a" },
   "gitlinker.nvim": { "branch": "master", "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },
