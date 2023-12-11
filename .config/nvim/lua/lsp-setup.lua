@@ -3,8 +3,6 @@ local lspconfig = require 'lspconfig'
 -- local lsp_status = require('lsp-status')
 -- local coq = require 'coq'
 local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-local null_ls = require('null-ls')
-local command_resolver = require('null-ls.helpers.command_resolver')
 
 -- lsp_status.register_progress()
 
@@ -20,54 +18,68 @@ mason.setup {
 
 require("mason-lspconfig").setup()
 
-null_ls.setup({
-  debug = true,
-  default_timeout = 10000,
-  sources = {
-    -- general
-    null_ls.builtins.formatting.trim_newlines,
-    null_ls.builtins.formatting.trim_whitespace,
-
-    --lua
-    null_ls.builtins.diagnostics.luacheck.with({
-      -- added "-g" to ignore warnings about globals
-      args = {"-g", "--formatter", "plain", "--codes", "--ranges", "--filename", "$FILENAME", "-"}
-    }),
-    null_ls.builtins.formatting.stylua,
-
-    -- javascript
-    --null_ls.builtins.code_actions.eslint.with({prefer_local = "node_modules/.bin"}),
-    --null_ls.builtins.diagnostics.eslint.with({prefer_local = "node_modules/.bin"}),
-    --null_ls.builtins.formatting.eslint.with({prefer_local = "node_modules/.bin"}),
-
-    -- ruby
-    null_ls.builtins.diagnostics.rubocop,
-    null_ls.builtins.formatting.rubocop.with({
-      --prefer_local = "bin",
-      args = { "--auto-correct-all", "-f", "quiet", "--stderr", "--stdin", "$FILENAME" }
-    }),
-
-    -- prettier
-    null_ls.builtins.formatting.prettierd.with({
-      filetypes = {'handlebars', 'yaml', 'markdown'}
-    }),
-
-    -- elixir
-    null_ls.builtins.diagnostics.credo,
-    null_ls.builtins.formatting.mix,
-
-    -- shell
-    null_ls.builtins.code_actions.shellcheck,
-    null_ls.builtins.diagnostics.shellcheck,
-
-    -- css
-    null_ls.builtins.formatting.stylelint.with({dynamic_command = command_resolver.from_node_modules()})
+local languages = vim.tbl_extend(
+  'force', 
+  require('efmls-configs.defaults').languages(),
+  {
+    bash = { require('efmls-configs.linters.shellcheck') },
+    ruby = { require('efmls-configs.linters.rubocop') },
+    yaml = { require('efmls-configs.formatters.prettier') },
   }
-})
+)
+
+local efmls_config = {
+  filetypes = vim.tbl_keys(languages),
+  settings = {
+    rootMarkers = { '.git/' },
+    languages = languages,
+  },
+  init_options = {
+    documentFormatting = true,
+    documentRangeFormatting = true,
+  },
+}
 
 local function setup(server, config)
   config = config or {}
-  config.on_attach = function (_client)
+  -- config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, lsp_status.capabilities)
+  config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, cmp_capabilities)
+  lspconfig[server].setup(config)
+end
+
+setup('efm', efmls_config)
+setup('tsserver', {
+  init_options = {
+    preferences = {
+      disableSuggestions = true;
+    };
+  };
+})
+setup 'solargraph'
+setup 'elixirls'
+setup 'ember'
+-- setup('glint', {
+--   cmd = {'yarn', '-s', 'glint-language-server'}
+-- })
+setup 'eslint'
+
+-- causing too much consternation
+-- setup 'syntax_tree'
+
+-- setup 'typeprof'
+
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer = true})
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer = true})
@@ -106,28 +118,5 @@ local function setup(server, config)
       })
     end, {buffer = true})
   end
-
-  -- config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, lsp_status.capabilities)
-  config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, cmp_capabilities)
-  lspconfig[server].setup(config)
-end
-
-setup('tsserver', {
-  init_options = {
-    preferences = {
-      disableSuggestions = true;
-    };
-  };
 })
-setup 'solargraph'
-setup 'elixirls'
-setup 'ember'
--- setup('glint', {
---   cmd = {'yarn', '-s', 'glint-language-server'}
--- })
-setup 'eslint'
 
--- causing too much consternation
--- setup 'syntax_tree'
-
--- setup 'typeprof'

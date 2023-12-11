@@ -24,6 +24,11 @@ return require('lazy').setup({
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
   'neovim/nvim-lspconfig',
+  {
+    'creativenull/efmls-configs-nvim',
+    version = 'v1.x.x', -- version is optional, but recommended
+    dependencies = { 'neovim/nvim-lspconfig' },
+  },
   -- 'sheerun/vim-polyglot'
   'tpope/vim-fugitive',
   -- 'tpope/vim-rhubarb'
