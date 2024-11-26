@@ -14,7 +14,13 @@ vim.opt.rtp:prepend(lazypath)
 return require('lazy').setup({
   'nvim-tree/nvim-tree.lua',
 
-  'ap/vim-css-color',
+  -- 'ap/vim-css-color',
+  { 
+    'NvChad/nvim-colorizer.lua',
+    config = function ()
+      require 'colorizer'.setup()
+    end
+  },
   {'jose-elias-alvarez/null-ls.nvim', dependencies = {'nvim-telescope/telescope-fzf-native.nvim'}},
   'editorconfig/editorconfig-vim',
   -- 'itchyny/lightline.vim'
@@ -53,6 +59,7 @@ return require('lazy').setup({
   -- 'tyru/open-browser.vim'
   -- 'Quramy/vim-js-pretty-template'
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  'kchmck/vim-coffee-script',
   {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     dependencies = {'nvim-lua/plenary.nvim'}
@@ -115,9 +122,14 @@ return require('lazy').setup({
       'nvim-lua/plenary.nvim',
     }
   },
-
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1000, -- We'd like this plugin to load first out of the rest
+    config = true, -- This automatically runs `require("luarocks-nvim").setup()`
+  },
   {
     "nvim-neorg/neorg",
+    dependencies = { "luarocks.nvim" },
     config = function()
         require('neorg').setup {
             load = {
@@ -133,8 +145,6 @@ return require('lazy').setup({
             },
         }
     end,
-    build = ":Neorg sync-parsers",
-    dependencies = "nvim-lua/plenary.nvim",
   },
 
   -- completion
@@ -144,6 +154,14 @@ return require('lazy').setup({
   'hrsh7th/cmp-cmdline',
   'hrsh7th/nvim-cmp',
   {'tzachar/cmp-fuzzy-path', dependencies = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}},
+  -- {
+  --   'zbirenbaum/copilot.lua',
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot-setup")
+  --   end,
+  -- },
 
   -- Colour Schemes
   --'arcticicestudio/nord-vim'
