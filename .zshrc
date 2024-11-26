@@ -49,9 +49,22 @@ autoload -U select-word-style
 select-word-style bash
 export WORDCHARS=""
 
-# Allow alt-arrow to work like Emacs
-bindkey '^[[1;3C' forward-word
-bindkey '^[[1;3D' backward-word
+if [ $(uname -s) = 'Darwin' ] && [ -z "$NVIM" ]; then
+  # Allow alt-arrow to work like Emacs
+  bindkey '^[^[[D' backward-word
+  bindkey '^[^[[C' forward-word
+
+  # Allow alt- up and down to do a history search
+  bindkey "^[^[[A" history-beginning-search-backward
+  bindkey "^[^[[B" history-beginning-search-forward
+else
+  bindkey '^[[1;3C' forward-word
+  bindkey '^[[1;3D' backward-word
+
+  # Allow alt- up and down to do a history search
+  bindkey '^[[1;3A' history-beginning-search-backward
+  bindkey '^[[1;3B' history-beginning-search-forward
+fi
 
 # Load work config, if exists
 if [ -f "$HOME/.work.zsh" ]; then
@@ -69,3 +82,14 @@ fi
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/alastairpharo/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+source $HOME/.asdf/asdf.sh
+
+autoload -Uz bashcompinit
+
+bashcompinit
+
+source $HOME/.asdf/completions/asdf.bash
