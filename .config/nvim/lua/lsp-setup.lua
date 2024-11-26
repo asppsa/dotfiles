@@ -1,10 +1,6 @@
 local mason = require 'mason'
 local lspconfig = require 'lspconfig'
--- local lsp_status = require('lsp-status')
--- local coq = require 'coq'
 local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- lsp_status.register_progress()
 
 mason.setup {
   ui = {
@@ -16,14 +12,15 @@ mason.setup {
   }
 }
 
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = { "lua_ls", "efm", "ts_ls", "elixirls", "eslint" }
+})
 
 local languages = vim.tbl_extend(
-  'force', 
+  'force',
   require('efmls-configs.defaults').languages(),
   {
     bash = { require('efmls-configs.linters.shellcheck') },
-    ruby = { require('efmls-configs.linters.rubocop') },
     yaml = { require('efmls-configs.formatters.prettier') },
   }
 )
@@ -48,7 +45,7 @@ local function setup(server, config)
 end
 
 setup('efm', efmls_config)
-setup('tsserver', {
+setup('ts_ls', {
   init_options = {
     preferences = {
       disableSuggestions = true;
@@ -62,6 +59,11 @@ setup 'ember'
 --   cmd = {'yarn', '-s', 'glint-language-server'}
 -- })
 setup 'eslint'
+setup 'lua_ls'
+setup 'coffeesense'
+setup('rubocop', {
+  cmd = {'bundle', 'exec', 'rubocop', '--lsp'}
+})
 
 -- causing too much consternation
 -- setup 'syntax_tree'
@@ -119,4 +121,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, {buffer = true})
   end
 })
-
