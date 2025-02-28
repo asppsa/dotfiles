@@ -28,7 +28,6 @@ if ! zgenom saved; then
 
   zgenom load zsh-users/zsh-syntax-highlighting
   zgenom load zsh-users/zsh-completions
-  zgenom load kiurchv/asdf.plugin.zsh
 
   # save all to init script
   zgenom save
@@ -82,14 +81,3 @@ fi
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/alastairpharo/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-source $HOME/.asdf/asdf.sh
-
-autoload -Uz bashcompinit
-
-bashcompinit
-
-source $HOME/.asdf/completions/asdf.bash
