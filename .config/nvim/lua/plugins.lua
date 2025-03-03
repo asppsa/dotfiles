@@ -21,7 +21,6 @@ return require('lazy').setup({
       require 'colorizer'.setup()
     end
   },
-  {'jose-elias-alvarez/null-ls.nvim', dependencies = {'nvim-telescope/telescope-fzf-native.nvim'}},
   'editorconfig/editorconfig-vim',
   -- 'itchyny/lightline.vim'
   'kamykn/popup-menu.nvim',
@@ -62,21 +61,10 @@ return require('lazy').setup({
   'kchmck/vim-coffee-script',
   {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
-    dependencies = {'nvim-lua/plenary.nvim'}
+    dependencies = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim'},
   },
   'ThePrimeagen/vim-be-good',
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = [[
-      cmake \
-        -S. \
-        -Bbuild \
-        -DCMAKE_BUILD_TYPE=Release && \
-      cmake --build build --config Release && \
-      cmake --install build --prefix build
-    ]]
-  },
-  {'tzachar/fuzzy.nvim', dependencies = {'nvim-telescope/telescope-fzf-native.nvim'}},
+  {'tzachar/fuzzy.nvim', dependencies = {'romgrk/fzy-lua-native'}},
   {
     "folke/trouble.nvim",
     dependencies = "kyazdani42/nvim-web-devicons",
@@ -126,25 +114,6 @@ return require('lazy').setup({
     "vhyrro/luarocks.nvim",
     priority = 1000, -- We'd like this plugin to load first out of the rest
     config = true, -- This automatically runs `require("luarocks-nvim").setup()`
-  },
-  {
-    "nvim-neorg/neorg",
-    dependencies = { "luarocks.nvim" },
-    config = function()
-        require('neorg').setup {
-            load = {
-                ["core.defaults"] = {}, -- Loads default behaviour
-                ["core.concealer"] = {}, -- Adds pretty icons to your documents
-                ["core.dirman"] = { -- Manages Neorg workspaces
-                    config = {
-                        workspaces = {
-                            notes = "~/notes",
-                        },
-                    },
-                },
-            },
-        }
-    end,
   },
 
   -- completion

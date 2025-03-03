@@ -1,4 +1,4 @@
-vim.o.guifont = "Hermit:h11"
+vim.o.guifont = "Hermit:h12"
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_profiler = false
 vim.g.neovide_cursor_animation_length = 0
