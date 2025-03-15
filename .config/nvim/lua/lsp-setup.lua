@@ -12,9 +12,7 @@ mason.setup {
   }
 }
 
-require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "efm", "ts_ls", "elixirls", "eslint" }
-})
+require("mason-lspconfig").setup()
 
 local languages = vim.tbl_extend(
   'force',
@@ -64,6 +62,7 @@ setup 'coffeesense'
 setup('rubocop', {
   cmd = {'bundle', 'exec', 'rubocop', '--lsp'}
 })
+setup 'rust_analyzer'
 
 -- causing too much consternation
 -- setup 'syntax_tree'
@@ -97,10 +96,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, {buffer = true})
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, {buffer = true})
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer = true})
-    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
     vim.keymap.set({'n', 'v'}, '<space>f', function()
       vim.cmd [[
         if exists(":EslintFixAll")

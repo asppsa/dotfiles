@@ -1,7 +1,17 @@
 vim.o.guifont = "Hermit:h12"
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_profiler = false
+
+-- Transparency
+vim.g.neovide_opacity = 0.95
+vim.g.neovide_normal_opacity = 0.95
+vim.o.winblend = 30
+vim.o.pumblend = 30
+
+-- Animation
 vim.g.neovide_cursor_animation_length = 0
+vim.g.neovide_position_animation_length = 0.05
+vim.g.neovide_scroll_animation_length = 0.05
 
 -- Control scaling
 vim.g.neovide_scale_factor = 1.0
@@ -16,19 +26,18 @@ vim.keymap.set("n", "<C-->", function()
 end)
 
 -- Setup copy-paste
+local copy = '<C-S-c>'
+local paste = '<C-S-V>'
 local sysname = vim.loop.os_uname().sysname
-if sysname == 'Linux' then
-  vim.keymap.set('v', '<C-S-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<C-S-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<C-S-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<C-S-v>', '<C-R>+') -- Paste command mode
-  -- vim.keymap.set('i', '<C-S-v>', '<ESC>l"+Pli') -- Paste insert mode
-elseif sysname == 'Darwin' then
-  vim.g.neovide_input_use_logo = 1 -- enable use of the logo (cmd) key
-  vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
-  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
-  -- vim.keymap.set('i, '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+if sysname == 'Darwin' then
+  copy = '<D-c>'
+  paste = '<D-v>'
 end
+
+vim.keymap.set('v', copy, '"+y') -- Copy
+vim.keymap.set(
+    {'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't'},
+    paste,
+    function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,
+    { noremap = true, silent = true }
+)

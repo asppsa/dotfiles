@@ -2,6 +2,9 @@ local telescope = require('telescope')
 local builtin = require('telescope.builtin')
 
 telescope.setup({
+  defaults = {
+    winblend = 30
+  },
   extensions = {
     fzy_native = {
       override_generic_sorter = false,
