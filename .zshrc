@@ -38,7 +38,19 @@ fi
 
 # editor
 export EDITOR=`which nvim`
-alias vi=`which nvim`
+case $OSTYPE in
+  darwin*)
+    alias vi=`which neovide`
+    ;;
+
+  *)
+    if [ -n "$XDG_WAYLAND_DISPLAY" -o -n "$DISPLAY" ]; then
+      alias vi=`which neovide`
+    else
+      alias vi=`which nvim`
+    fi
+    ;;
+esac
 
 # ls
 alias ls='ls --color=auto'
@@ -56,9 +68,19 @@ bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3A' history-beginning-search-backward
 bindkey '^[[1;3B' history-beginning-search-forward
 
+# Mise, if installed
+if (( $+commands[mise] )); then
+  #eval "$(mise activate zsh)"
+fi
+
 # Load work config, if exists
 if [ -f "$HOME/.work.zsh" ]; then
   source "$HOME/.work.zsh"
+
+  # Re-run hook-env after asdf is setup
+  if (( $+commands[mise] )); then
+    #eval "$(mise hook-env -f -s zsh)"
+  fi
 fi
 
 # Prompt - use starship if installed
