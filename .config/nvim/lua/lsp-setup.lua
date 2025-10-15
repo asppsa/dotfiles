@@ -1,6 +1,6 @@
 local mason = require 'mason'
+local mason_registry = require 'mason-registry'
 local lspconfig = require 'lspconfig'
-local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 mason.setup {
   ui = {
@@ -37,10 +37,18 @@ local efmls_config = {
 
 local function setup(server, config)
   config = config or {}
-  -- config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, lsp_status.capabilities)
-  config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, cmp_capabilities)
-  lspconfig[server].setup(config)
+  vim.lsp.config(server, config)
+  vim.lsp.enable(server)
 end
+
+setup('cspell_ls', {
+  cmd = {
+    'cspell-lsp',
+    '--stdio',
+    '--config',
+    os.getenv('HOME') .. '/.config/cspell.json'
+  }
+})
 
 setup('efm', efmls_config)
 setup('ts_ls', {
@@ -51,7 +59,11 @@ setup('ts_ls', {
   };
 })
 setup 'solargraph'
-setup 'elixirls'
+
+setup('elixirls', {
+  cmd = { os.getenv('HOME') .. '/.local/share/nvim/mason/packages/elixir-ls/language_server.sh' }
+})
+
 setup 'ember'
 -- setup('glint', {
 --   cmd = {'yarn', '-s', 'glint-language-server'}
@@ -108,7 +120,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       ]]
 
       vim.lsp.buf.format({
-        async = true,
         filter = function (client)
           -- Some LSPs do dumb things, so we filter them out
           for _, lsp in ipairs({'tsserver'}) do

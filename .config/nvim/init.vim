@@ -17,6 +17,7 @@ lua require 'plugins'
 " Setup other lua stuff
 lua require 'treesitter-setup'
 lua require 'telescope-setup'
+lua require 'copilot-setup'
 lua require 'cmp-setup'
 lua require 'lsp-setup'
 lua require 'nvim-tree-setup'
@@ -49,7 +50,7 @@ colorscheme rose-pine
 set noshowmode
 
 " Enable spellchecking
-set spell
+" set spell
 
 " deletes the last newline in the file
 map <M-S-x> :!perl -pi -e 'chomp if eof' %<CR>

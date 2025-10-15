@@ -1,4 +1,12 @@
-vim.o.guifont = "Hermit:h12"
+if vim.loop.os_uname().sysname == 'Darwin' then
+  vim.o.guifont = "Hermit:h13"
+  vim.g.neovide_padding_top = 4
+  vim.g.neovide_padding_bottom = 4
+  vim.g.neovide_padding_right = 4
+  vim.g.neovide_padding_left = 4
+else
+  vim.o.guifont = "Hermit:h12"
+end
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_profiler = false
 

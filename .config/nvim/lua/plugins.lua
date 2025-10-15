@@ -26,8 +26,8 @@ return require('lazy').setup({
   'kamykn/popup-menu.nvim',
   -- 'kamykn/spelunker.vim'
   -- 'maximbaz/lightline-ale'
-  "williamboman/mason.nvim",
-  "williamboman/mason-lspconfig.nvim",
+  "mason-org/mason.nvim",
+  "mason-org/mason-lspconfig.nvim",
   'neovim/nvim-lspconfig',
   {
     'creativenull/efmls-configs-nvim',
@@ -64,7 +64,7 @@ return require('lazy').setup({
     dependencies = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim'},
   },
   'ThePrimeagen/vim-be-good',
-  {'tzachar/fuzzy.nvim', dependencies = {'romgrk/fzy-lua-native'}},
+  --{'tzachar/fuzzy.nvim', dependencies = {'romgrk/fzy-lua-native'}},
   {
     "folke/trouble.nvim",
     dependencies = "kyazdani42/nvim-web-devicons",
@@ -108,7 +108,17 @@ return require('lazy').setup({
     'nvim-pack/nvim-spectre',
     dependencies = {
       'nvim-lua/plenary.nvim',
-    }
+    },
+    build = "./build.sh nvim-oxi",
+    config = function()
+        require('spectre').setup({
+            default = {
+                replace = {
+                    cmd = "oxi"
+               }
+            }
+        })
+    end
   },
   {
     "vhyrro/luarocks.nvim",
@@ -117,20 +127,44 @@ return require('lazy').setup({
   },
 
   -- completion
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/nvim-cmp',
-  {'tzachar/cmp-fuzzy-path', dependencies = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}},
+  {
+    'zbirenbaum/copilot.lua',
+    requires = {
+      --"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+    },
+    cmd = "Copilot",
+    event = "InsertEnter",
+  },
+  {
+    'saghen/blink.cmp',
+    version = '1.*',
+    dependencies = { "fang2hou/blink-copilot", 'L3MON4D3/LuaSnip' }
+  },
+  -- 'hrsh7th/cmp-nvim-lsp',
+  -- 'hrsh7th/cmp-buffer',
+  -- 'hrsh7th/cmp-path',
+  -- 'hrsh7th/cmp-cmdline',
+  -- 'hrsh7th/nvim-cmp',
+  -- {'tzachar/cmp-fuzzy-path', dependencies = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}},
   -- {
-  --   'zbirenbaum/copilot.lua',
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot-setup")
-  --   end,
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     if os.getenv("USE_NVIM_COPILOT") then
+  --       require("copilot_cmp").setup()
+  --     end
+  --   end
   -- },
+  {
+    "olimorris/codecompanion.nvim",
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function ()
+      if os.getenv("USE_NVIM_COPILOT") then
+      end
+    end
+  },
   {
     'L3MON4D3/LuaSnip',
     -- follow latest release.
@@ -138,7 +172,7 @@ return require('lazy').setup({
     -- install jsregexp (optional!).
     build = "make install_jsregexp"
   },
-  'saadparwaiz1/cmp_luasnip',
+  --'saadparwaiz1/cmp_luasnip',
 
   -- Colour Schemes
   --'arcticicestudio/nord-vim'
