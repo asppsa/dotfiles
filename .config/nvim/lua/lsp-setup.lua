@@ -1,6 +1,4 @@
 local mason = require 'mason'
-local mason_registry = require 'mason-registry'
-local lspconfig = require 'lspconfig'
 
 mason.setup {
   ui = {
@@ -20,6 +18,7 @@ local languages = vim.tbl_extend(
   {
     bash = { require('efmls-configs.linters.shellcheck') },
     yaml = { require('efmls-configs.formatters.prettier') },
+    -- python = { require('efmls-configs.formatters.black') },
   }
 )
 
@@ -74,6 +73,7 @@ setup 'coffeesense'
 setup('rubocop', {
   cmd = {'bundle', 'exec', 'rubocop', '--lsp'}
 })
+setup 'ruff'
 setup 'rust_analyzer'
 
 -- causing too much consternation
