@@ -18,9 +18,16 @@ blink.setup({
       }
     }
   },
+  keymap = {
+    ['<Tab>'] = { 'select_and_accept', 'fallback' },
+    ['<S-Tab>'] = false,
+    ['<C-CR>'] = { 'select_and_accept', 'fallback' }
+  },
   cmdline = {
     completion = { menu = { auto_show = true } },
     keymap = {
+      ['<Tab>'] = { 'select_and_accept', 'fallback' },
+      ['<S-Tab>'] = false,
       ['<C-CR>'] = { 'accept_and_enter', 'fallback' }
     }
   },
