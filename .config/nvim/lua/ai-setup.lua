@@ -1,4 +1,6 @@
 local agentic = require('agentic')
+local SessionDelete = require('agentic_session_delete')
+local SessionRegistry = require('agentic.session_registry')
 
 agentic.setup({
   provider = "opencode-acp",
@@ -55,10 +57,10 @@ agentic.setup({
   },
 
   permission_icons = {
-    allow_once = "●",    -- Allow this execution only
-    allow_always = "█",  -- Allow all future executions
-    reject_once = "○",    -- Reject this execution only
-    reject_always = "X",  -- Reject all future executions
+    allow_once = "◉",    -- Allow this execution only
+    allow_always = "●",  -- Allow all future executions
+    reject_once = "◎",    -- Reject this execution only
+    reject_always = "○",  -- Reject all future executions
   },
 
   chat_icons = {
@@ -74,12 +76,19 @@ agentic.setup({
   },
 })
 
-vim.keymap.set({ "n", "v", "i" }, "<C-\\>", function() agentic.toggle() end, { desc = "Toggle Agentic Chat" })
+vim.keymap.set({ "n", "v", "i" }, "<C-\\>", agentic.toggle(), { desc = "Toggle Agentic Chat" })
 vim.keymap.set({ "n", "v" }, "<C-'>", function() agentic.add_selection_or_file_to_context() end,
   { desc = "Add file or selection to Agentic to Context" })
 vim.keymap.set({ "n", "v", "i" }, "<C-,>", function() agentic.new_session() end, { desc = "New Agentic Session" })
 vim.keymap.set({ "n", "v", "i" }, "<A-i>r", function() agentic.restore_session() end,
   { desc = "Agentic Restore session", silent = true })
+local function delete_session()
+  SessionRegistry.get_session_for_tab_page(nil, function(session)
+    SessionDelete.show_picker(session)
+  end)
+end
+vim.keymap.set({ "n", "v", "i" }, "<A-i>d", delete_session,
+  { desc = "Agentic Delete session", silent = true })
 vim.keymap.set("n", "<leader>ad", function() agentic.add_current_line_diagnostics() end,
   { desc = "Add current line diagnostic to Agentic" })
 vim.keymap.set("n", "<leader>aD", function() agentic.add_buffer_diagnostics() end,
