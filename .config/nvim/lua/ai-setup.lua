@@ -41,36 +41,36 @@ agentic.setup({
   },
 
   diagnostic_icons = {
-    error = "╳",    -- Diagnostic severity: error
+    error = "X",    -- Diagnostic severity: error
     warn = "▲",     -- Diagnostic severity: warning
     info = "●",      -- Diagnostic severity: information
     hint = "◆",     -- Diagnostic severity: hint
   },
 
   status_icons = {
-    pending = "░",      -- Tool call awaiting execution
-    in_progress = "▓",  -- Tool currently executing
-    completed = "█",    -- Tool executed successfully
-    failed = "╳",       -- Tool execution failed
+    pending = "***",      -- Tool call awaiting execution
+    in_progress = "...",  -- Tool currently executing
+    completed = "∎",    -- Tool executed successfully
+    failed = "X",       -- Tool execution failed
   },
 
   permission_icons = {
     allow_once = "●",    -- Allow this execution only
     allow_always = "█",  -- Allow all future executions
     reject_once = "○",    -- Reject this execution only
-    reject_always = "╳",  -- Reject all future executions
+    reject_always = "X",  -- Reject all future executions
   },
 
   chat_icons = {
-    user = "► ",    -- Icon shown for user messages
-    agent = "◄ ",  -- Icon shown for agent/AI messages
+    user = "▶ ",    -- Icon shown for user messages
+    agent = "◀ ",  -- Icon shown for agent/AI messages
   },
 
   message_icons = {
     thinking = "♚",   -- Shown when the agent is thinking/reasoning
-    finished = "█",   -- Shown when the interaction completes successfully
+    finished = "∎",   -- Shown when the interaction completes successfully
     stopped = "■",     -- Shown when the user cancels the generation
-    error = "╳",      -- Shown when the interaction ends with an error
+    error = "X",      -- Shown when the interaction ends with an error
   },
 })
 
