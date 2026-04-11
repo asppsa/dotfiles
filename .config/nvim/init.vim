@@ -1,3 +1,7 @@
+" Disable netrw
+let g:loaded_netrw=1
+let g:loaded_netrwPlugin=1
+
 " Basic indenting rules
 set expandtab
 set shiftwidth=2
@@ -5,6 +9,8 @@ set softtabstop=2
 
 " Hide rather than closing buffers
 set hidden
+
+set autoread
 
 " Enable mouse interaction
 set mouse=nv
@@ -17,7 +23,7 @@ lua require 'plugins'
 " Setup other lua stuff
 lua require 'treesitter-setup'
 lua require 'telescope-setup'
-lua require 'copilot-setup'
+lua require 'ai-setup'
 lua require 'cmp-setup'
 lua require 'lsp-setup'
 lua require 'nvim-tree-setup'

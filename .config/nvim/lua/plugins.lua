@@ -61,13 +61,42 @@ return require('lazy').setup({
   'kchmck/vim-coffee-script',
   {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
-    dependencies = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim'},
+    dependencies = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim', 'nvim-telescope/telescope-ui-select.nvim'}
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = false },
+      explorer = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = true },
+      picker = { enabled = false },
+      notifier = { enabled = false },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = true },
+    },
+  },
+  {
+    "j-hui/fidget.nvim",
+    opts = {
+      -- options
+    },
   },
   'ThePrimeagen/vim-be-good',
   --{'tzachar/fuzzy.nvim', dependencies = {'romgrk/fzy-lua-native'}},
   {
     "folke/trouble.nvim",
-    dependencies = "kyazdani42/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("trouble").setup {
         -- your configuration comes here
@@ -78,18 +107,27 @@ return require('lazy').setup({
   },
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   {
     'pwntester/octo.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
-      'kyazdani42/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
     },
     config = function ()
       require"octo".setup()
     end
+  },
+  {
+      'MeanderingProgrammer/render-markdown.nvim',
+      dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+      ---@module 'render-markdown'
+      ---@type render.md.UserConfig
+      opts = {
+        file_types = { "markdown", "md", "AgenticChat" },
+      },
   },
   {
     "ray-x/sad.nvim",
@@ -128,42 +166,9 @@ return require('lazy').setup({
 
   -- completion
   {
-    'zbirenbaum/copilot.lua',
-    requires = {
-      --"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
-    },
-    cmd = "Copilot",
-    event = "InsertEnter",
-  },
-  {
     'saghen/blink.cmp',
     version = '1.*',
     dependencies = { "fang2hou/blink-copilot", 'L3MON4D3/LuaSnip' }
-  },
-  -- 'hrsh7th/cmp-nvim-lsp',
-  -- 'hrsh7th/cmp-buffer',
-  -- 'hrsh7th/cmp-path',
-  -- 'hrsh7th/cmp-cmdline',
-  -- 'hrsh7th/nvim-cmp',
-  -- {'tzachar/cmp-fuzzy-path', dependencies = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}},
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   config = function ()
-  --     if os.getenv("USE_NVIM_COPILOT") then
-  --       require("copilot_cmp").setup()
-  --     end
-  --   end
-  -- },
-  {
-    "olimorris/codecompanion.nvim",
-    opts = {},
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function ()
-      if os.getenv("USE_NVIM_COPILOT") then
-      end
-    end
   },
   {
     'L3MON4D3/LuaSnip',
@@ -173,6 +178,11 @@ return require('lazy').setup({
     build = "make install_jsregexp"
   },
   --'saadparwaiz1/cmp_luasnip',
+
+  -- ai
+  {
+    "carlos-algms/agentic.nvim",
+  },
 
   -- Colour Schemes
   --'arcticicestudio/nord-vim'
@@ -207,8 +217,8 @@ return require('lazy').setup({
   },
   { 'rose-pine/neovim',
     name = 'rose-pine',
-    config = function()
-      require("rose-pine").setup({
+    config = function ()
+      require('rose-pine').setup({
         variant = 'moon'
       })
     end
