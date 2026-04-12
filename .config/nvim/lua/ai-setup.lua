@@ -76,7 +76,7 @@ agentic.setup({
   },
 })
 
-vim.keymap.set({ "n", "v", "i" }, "<C-\\>", agentic.toggle(), { desc = "Toggle Agentic Chat" })
+vim.keymap.set({ "n", "v", "i" }, "<C-\\>", function() agentic.toggle() end, { desc = "Toggle Agentic Chat" })
 vim.keymap.set({ "n", "v" }, "<C-'>", function() agentic.add_selection_or_file_to_context() end,
   { desc = "Add file or selection to Agentic to Context" })
 vim.keymap.set({ "n", "v", "i" }, "<C-,>", function() agentic.new_session() end, { desc = "New Agentic Session" })
