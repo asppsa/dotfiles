@@ -68,6 +68,7 @@ setup 'ember'
 --   cmd = {'yarn', '-s', 'glint-language-server'}
 -- })
 setup 'eslint'
+setup 'oxfmt'
 setup 'lua_ls'
 setup 'coffeesense'
 setup('rubocop', {
