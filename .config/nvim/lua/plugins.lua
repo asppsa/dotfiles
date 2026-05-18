@@ -57,10 +57,10 @@ return require('lazy').setup({
   -- 'tyru/open-browser-github.vim'
   -- 'tyru/open-browser.vim'
   -- 'Quramy/vim-js-pretty-template'
-  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  {'nvim-treesitter/nvim-treesitter', lazy = false, build = ':TSUpdate'},
   'kchmck/vim-coffee-script',
   {
-    'nvim-telescope/telescope.nvim', branch = '0.1.x',
+    'nvim-telescope/telescope.nvim', version = '*',
     dependencies = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim', 'nvim-telescope/telescope-ui-select.nvim'}
   },
   {
