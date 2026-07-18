@@ -121,13 +121,15 @@ return require('lazy').setup({
     end
   },
   {
-      'MeanderingProgrammer/render-markdown.nvim',
-      dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-      ---@module 'render-markdown'
-      ---@type render.md.UserConfig
-      opts = {
-        file_types = { "markdown", "md", "AgenticChat" },
-      },
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {
+      -- anti_conceal = { enabled = false },
+      file_types = { "markdown", "md", "AgenticChat", "opencode_output" },
+    },
+    ft = { 'markdown', 'Avante', 'copilot-chat', 'opencode_output' },
   },
   {
     "ray-x/sad.nvim",
@@ -140,6 +142,19 @@ return require('lazy').setup({
     'numToStr/Comment.nvim',
     config = function()
         require('Comment').setup()
+    end
+  },
+  {
+    'MagicDuck/grug-far.nvim',
+    -- Note (lazy loading): grug-far.lua defers all it's requires so it's lazy by default
+    -- additional lazy config to defer loading is not really needed...
+    config = function()
+      -- optional setup call to override plugin options
+      -- alternatively you can set options with vim.g.grug_far = { ... }
+      require('grug-far').setup({
+        -- options, see Configuration section below
+        -- there are no required options atm
+      });
     end
   },
   {
@@ -182,6 +197,36 @@ return require('lazy').setup({
   -- ai
   {
     "carlos-algms/agentic.nvim",
+  },
+  {
+    "sudo-tee/opencode.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
+      -- Optional, for file mentions and commands completion, pick only one
+      'saghen/blink.cmp',
+      'nvim-telescope/telescope.nvim',
+    },
+  },
+
+  -- obsidian
+  {
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- use latest release, remove to use latest commit
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false, -- this will be removed in 4.0.0
+      workspaces = {
+        {
+          name = "work",
+          path = "~/Library/CloudStorage/OneDrive-3PLearningLTD/Obsidian Vault",
+        },
+      },
+      picker = {
+        name = "telescope.nvim"
+      }
+    },
   },
 
   -- Colour Schemes

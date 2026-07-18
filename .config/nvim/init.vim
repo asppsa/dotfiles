@@ -12,6 +12,10 @@ set hidden
 
 set autoread
 
+" Allow concealed text
+set conceallevel=1
+let g:vim_json_conceal = 0
+
 " Enable mouse interaction
 set mouse=nv
 
