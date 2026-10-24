@@ -19,6 +19,11 @@ if [ -d /opt/homebrew/bin ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
 
+# Add local bin dir to path, if it exists
+if [ -d "$HOME/.local/bin" ]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 # load zgenom
 source "${HOME}/.zgenom/zgenom.zsh"
 zgenom autoupdate
