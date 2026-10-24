@@ -208,24 +208,14 @@ return require('lazy').setup({
       'nvim-telescope/telescope.nvim',
     },
   },
-
-  -- obsidian
   {
-    "obsidian-nvim/obsidian.nvim",
-    version = "*", -- use latest release, remove to use latest commit
-    ---@module 'obsidian'
-    ---@type obsidian.config
-    opts = {
-      legacy_commands = false, -- this will be removed in 4.0.0
-      workspaces = {
-        {
-          name = "work",
-          path = "~/Library/CloudStorage/OneDrive-3PLearningLTD/Obsidian Vault",
-        },
-      },
-      picker = {
-        name = "telescope.nvim"
-      }
+    "azorng/goose.nvim",
+    config = function()
+      require("goose").setup({})
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
     },
   },
 
